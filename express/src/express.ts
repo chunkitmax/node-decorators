@@ -41,7 +41,7 @@ export function attachControllerInstances(app: Express | Router, controllers: ob
 function registerController(app: Application | Router, Controller: Type|object, getController: (c: Type|object) => ExpressClass) {
   const controller: ExpressClass = getController(Controller);
   const meta: ExpressMeta = getMeta(controller);
-  const router: Router = Router();
+  const router: Router = Router({ mergeParams: true });
   const routes: object = meta.routes;
   const url: string = meta.url;
   const params: object = meta.params;
@@ -87,6 +87,7 @@ function registerController(app: Application | Router, Controller: Type|object, 
     ]);
   }
 
+  // @ts-ignore
   app.use(url, router);
 
   return app;
